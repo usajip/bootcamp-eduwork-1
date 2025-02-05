@@ -10,7 +10,7 @@
             <a href="{{ route('product.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tambah Produk</a>
         </div>
 
-        <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="bg-white shadow rounded-lg overflow-scroll">
             <table class="table-auto w-full text-left">
                 <thead class="bg-gray-200">
                     <tr>
@@ -29,9 +29,9 @@
                         <tr class="border-t hover:bg-gray-100">
                             <td class="px-4 py-2">{{ $product->id }}</td>
                             <td class="px-4 py-2">{{ $product->name }}</td>
-                            <td class="px-4 py-2">{{ Str::limit($product->description, 50) }}</td>
+                            <td class="px-4 py-2">{{ Str::limit($product->description, 10) }}</td>
                             <td class="px-4 py-2">
-                                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded">
+                                <img src="{{ Storage::disk('images')->url($product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded">
                             </td>
                             <td class="px-4 py-2">{{ $product->stock }}</td>
                             <td class="px-4 py-2">Rp{{ number_format($product->price, 0, ',', '.') }}</td>

@@ -13,7 +13,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(5);
+        //withCount jumlah data
+        //withSum total data
+        $products = Product::with('category')->paginate(2);
+        // dd($products);
+        // $product = Product::where('category_id', 1)->get();
+        // $product = Product::where('category_id', 1)->all();
+        // $product = Product::where('category_id', 1)->paginate(3);
+        // $product = Product::where('category_id', 1)->first();
+        // // Kalau ada ditampilakan yang pertama, kalau gak ada akan error 404
+        // $product = Product::where('category_id', 1)->firstOrFail();
+        // $product = Product::findOrFail(4);
+
         return view('dashboard.product.index', compact('products'));
     }
 
@@ -48,7 +59,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product    = Product::findOrFail($id);
+        $product      = Product::findOrFail($id);
         $categories   = Category::all();
 
         return view('dashboard.product.edit', compact('categories', 'product'));

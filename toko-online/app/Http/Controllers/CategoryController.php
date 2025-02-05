@@ -13,7 +13,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::withCount('product')
-                        ->paginate(3);
+                        ->with('product')
+                        ->withSum('product as total_price', 'price')
+                        ->paginate(5);
         return view('dashboard.category.index', compact('categories'));
     }
 

@@ -17,6 +17,7 @@
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Nama Kategori</th>
                         <th class="px-4 py-2">Jumlah Produk</th>
+                        <th class="px-4 py-2">Total Harga Produk</th>
                         <th class="px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                             <td class="px-4 py-2">{{ $category->id }}</td>
                             <td class="px-4 py-2">{{ $category->name }}</td>
                             <td class="px-4 py-2">{{ $category->product_count }}</td>
+                            <td class="px-4 py-2">{{ $category->total_price }}</td>
                             <td class="px-4 py-2">
                                 <div class="flex space-x-2">
                                     <a href="#!" data-bs-toggle="modal" data-bs-target="#edit{{ $category->id }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
