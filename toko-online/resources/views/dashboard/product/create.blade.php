@@ -10,6 +10,18 @@
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
+                <x-alert-component type="success"/>
+                <x-alert-component type="error"/>
+                @if ($errors->any())
+                    <div class="p-4 mb-4 text-sm text-red-800 bg-red-100 border border-red-400 rounded-lg">
+                        <strong>Terjadi kesalahan:</strong>
+                        <ul class="mt-2 list-disc list-inside">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">Tambah Produk</div>
                     <div class="card-body">
@@ -29,7 +41,7 @@
 
                             <div class="mb-3">
                                 <label for="price" class="form-label">Harga</label>
-                                <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
+                                <input type="number" step="1" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
                                 @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 

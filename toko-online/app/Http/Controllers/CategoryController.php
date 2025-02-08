@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        // return view('dashboard.category.create');
     }
 
     /**
@@ -32,7 +32,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+           'name'=> 'required|string|max:255'
+        ]);
+
+        $check = Category::where('name', $request->name)->exists(); // true/false
+
+        if($check) {
+            return back()->with('error', $request->name.' category already exists');
+        }else{
+            $category = new Category;
+            $category->name = $request->name;
+            $category->save();
+            return redirect()->route('category.index')
+                ->with('success', 'Category created successfully');
+        }
     }
 
     /**

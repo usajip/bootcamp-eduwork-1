@@ -5,6 +5,18 @@
         </h2>
     </x-slot>
     <div class="container mx-auto py-10">
+        <x-alert-component type="success"/>
+        <x-alert-component type="error"/>
+        @if ($errors->any())
+            <div class="p-4 mb-4 text-sm text-red-800 bg-red-100 border border-red-400 rounded-lg">
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="mt-2 list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="flex justify-between items-center mb-5">
             <h1 class="text-2xl font-bold">Kategori Produk</h1>
             <button id="open-modal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tambah Kategori</button>
@@ -27,7 +39,7 @@
                             <td class="px-4 py-2">{{ $category->id }}</td>
                             <td class="px-4 py-2">{{ $category->name }}</td>
                             <td class="px-4 py-2">{{ $category->product_count }}</td>
-                            <td class="px-4 py-2">{{ $category->total_price }}</td>
+                            <td class="px-4 py-2">Rp{{ number_format($category->total_price, 0, ',', '.') }}</td>
                             <td class="px-4 py-2">
                                 <div class="flex space-x-2">
                                     <a href="#!" data-bs-toggle="modal" data-bs-target="#edit{{ $category->id }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
@@ -47,6 +59,9 @@
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{ $category->name }}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    @foreach($category->product as $product)
+                                    <p>{{ $product->name }}</p>
+                                    @endforeach
                                     <form>
                                         <div class="modal-body">
                                             <div class="mb-3">
@@ -98,9 +113,11 @@
     <div id="modal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
             <h2 class="text-xl font-bold mb-4">Tambah Kategori</h2>
-            <form id="category-form">
+            <form action="{{ route('category.store') }}" method="POST" id="category-form">
+                @csrf
                 <label for="category-name" class="block font-medium mb-2">Nama Kategori</label>
-                <input type="text" id="category-name" name="category-name" class="w-full border border-gray-300 p-2 rounded-md mb-4" required>
+                <input type="text" id="category-name" name="name" 
+                    class="w-full border border-gray-300 p-2 rounded-md mb-4" required>
                 <div class="flex justify-end space-x-2">
                     <button type="button" id="close-modal" class="bg-gray-400 text-white px-4 py-2 rounded-md">Batal</button>
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md">Simpan</button>
@@ -118,12 +135,6 @@
     });
 
     closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
-
-    document.getElementById('category-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert(`Kategori "${document.getElementById('category-name').value}" berhasil disimpan!`);
         modal.classList.add('hidden');
     });
 </script>
