@@ -25,7 +25,7 @@
           @endif
         @else
         <li class="nav-item active">
-          <a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
+          <a class="nav-link" href="{{route('dashboards')}}">Dashboard</a>
         </li>
         <li class="nav-item active">
           <form method="POST" action="{{ route('logout') }}">@csrf

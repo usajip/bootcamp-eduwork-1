@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -70,7 +72,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name'=> 'required|string|max:255',
+        ]);
+
+        $check_name = Category::where('name', $request->name)->exists();
+        
+        if($check_name) {
+            return back()->with('error', $request->name.' category already exists');
+        }else{
+            $category->name = $request->name;
+            $category->save();
+            return redirect()->route('category.index')
+                ->with('success', 'Category updated successfully');
+        }
     }
 
     /**
@@ -78,6 +93,19 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $product = Product::where('category_id', $category->id)->get();
+
+        foreach($product as $item) {
+            $fullPath = public_path($item->image);
+            if (file_exists($fullPath)) {
+                unlink($fullPath);
+            }
+            $item->delete();
+        }
+
+        $category->delete();
+
+        return redirect()->route('category.index')
+            ->with('success', 'Category deleted successfully');
     }
 }

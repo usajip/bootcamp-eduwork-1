@@ -10,23 +10,28 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h1 class="text-3xl font-bold text-gray-800 mb-6">Dashboard Ringkasan Data</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <!-- Kartu Jumlah Produk -->
                         <div class="bg-white p-6 rounded-xl shadow-md">
                             <h2 class="text-xl font-semibold text-gray-700">Jumlah Produk</h2>
-                            <p class="text-4xl font-bold text-blue-500 mt-2">1,234</p>
+                            <p class="text-4xl font-bold text-blue-500 mt-2">{{ $jumlahProduct}}</p>
                         </div>
                         
                         <!-- Kartu Jumlah Kategori -->
                         <div class="bg-white p-6 rounded-xl shadow-md">
                             <h2 class="text-xl font-semibold text-gray-700">Jumlah Kategori</h2>
-                            <p class="text-4xl font-bold text-green-500 mt-2">56</p>
+                            <p class="text-4xl font-bold text-green-500 mt-2">{{$jumlahCategory}}</p>
                         </div>
                         
                         <!-- Kartu Jumlah Klik Produk -->
                         <div class="bg-white p-6 rounded-xl shadow-md">
                             <h2 class="text-xl font-semibold text-gray-700">Jumlah Klik Produk</h2>
-                            <p class="text-4xl font-bold text-red-500 mt-2">12,345</p>
+                            <p class="text-4xl font-bold text-red-500 mt-2">{{$jumlahKlikProduct}}</p>
+                        </div>
+                        <!-- Kartu Jumlah Klik Produk -->
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h2 class="text-xl font-semibold text-gray-700">Jumlah Keranjang Produk</h2>
+                            <p class="text-4xl font-bold text-red-500 mt-2">{{$jumlahKeranjang}}</p>
                         </div>
                     </div>
                     <!-- Chart Penjualan -->

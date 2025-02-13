@@ -59,10 +59,8 @@
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{ $category->name }}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    @foreach($category->product as $product)
-                                    <p>{{ $product->name }}</p>
-                                    @endforeach
-                                    <form>
+                                    <form action="{{ route('category.update', $category->id) }}" method="POST">
+                                        @method('PUT') @csrf
                                         <div class="modal-body">
                                             <div class="mb-3">
                                                 <label for="name" class="col-form-label">Name:</label>

@@ -13,8 +13,8 @@
                 <div class="card">
                     <div class="card-header">Tambah Produk</div>
                     <div class="card-body">
-                        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
+                        <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf @method('PUT')
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Produk</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $product->name }}" required>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="category" class="form-label">Kategori</label>
-                                <select class="form-select" aria-label="Default select example" required>
+                                <select class="form-select" name="category" aria-label="Default select example" required>
                                     @foreach($categories as $category)
                                     <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{$category->name}}</option>
                                     @endforeach

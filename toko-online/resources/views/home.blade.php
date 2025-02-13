@@ -13,11 +13,18 @@
             </div>
         </div>
     </div>
+    <form action="{{ route('search.product') }}" method="GET">
+        <div class="mb-3">
+            <input type="text" class="form-control" name="search" value="{{ old('search') }}" required>
+        </div>
+    </form>
+    @foreach($categories as $category)
+    <a href="{{ route('product.category', $category->id)}}" class="btn">{{$category->name}} </a>
+    @endforeach
     <div class="container mx-auto py-10" id="products">
         <h1 class="text-3xl font-bold text-center mb-10">Daftar Produk</h1>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($products as $product)
+            @forelse ($products as $product)
                 <div class="bg-white shadow rounded-lg overflow-hidden">
                     <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
                     <div class="p-4">
@@ -25,15 +32,31 @@
                         <p class="text-gray-600 text-sm mb-4">{{ Str::limit($product->description, 100) }}</p>
                         <p class="text-xl font-semibold text-blue-500 mb-4">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
                         {{-- <a href="{{ route('cart.add-to-cart', $product->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Tambahkan ke Keranjang</a> --}}
-                        <a href="{{ route('carts.add-to-cart', $product->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Tambahkan ke Keranjang</a>
+                        {{-- <a href="{{ route('carts.add-to-cart', $product->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Tambahkan ke Keranjang</a> --}}
+                        <a href="{{ route('product.show', $product->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Lihat Detail</a>
                     </div>
                 </div>
-            @endforeach
+            @empty
+            @endforelse
         </div>
 
-        @if ($products->isEmpty())
+        @if($products->isEmpty())
             <div class="text-center mt-10">
                 <p class="text-gray-500">Belum ada produk yang tersedia.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            @foreach ($recommendation as $product)
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold mb-2">{{ $product->name }}</h2>
+                    <p class="text-gray-600 text-sm mb-4">{{ Str::limit($product->description, 100) }}</p>
+                    <p class="text-xl font-semibold text-blue-500 mb-4">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
+                    {{-- <a href="{{ route('cart.add-to-cart', $product->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Tambahkan ke Keranjang</a> --}}
+                    <a href="{{ route('carts.add-to-cart', $product->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Tambahkan ke Keranjang</a>
+                </div>
+            </div>
+            @endforeach
             </div>
         @endif
 
